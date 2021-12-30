@@ -1,1 +1,2 @@
-export { paginationCalculator } from "./paginationCalculator";
+export * from "./paginationCalculator";
+export { paginationCalculator as default } from "./paginationCalculator";

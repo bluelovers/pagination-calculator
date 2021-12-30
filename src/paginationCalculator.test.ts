@@ -1,5 +1,5 @@
-import { AsyncTest, Expect, Test, TestCase, TestFixture, SpyOn } from "alsatian";
-import { paginationCalculator, PageCalculatorOptions, PageInformation } from "./paginationCalculator";
+import { Expect, Test, TestCase, TestFixture } from "alsatian";
+import { paginationCalculator, IPageCalculatorOptions, IPageInformation } from "./paginationCalculator";
 
 @TestFixture("pageCalculator")
 export class PageCalculatorTests {
@@ -289,7 +289,7 @@ export class PageCalculatorTests {
             showingEnd: 130
         }
     )
-    public ShouldHandleOtherVariations(options: PageCalculatorOptions, expectedResult: PageInformation) {
+    public ShouldHandleOtherVariations(options: IPageCalculatorOptions, expectedResult: IPageInformation) {
         const result = paginationCalculator(options);
         Expect(result).toEqual(expectedResult);
     }

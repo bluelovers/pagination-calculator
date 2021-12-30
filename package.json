@@ -1,24 +1,69 @@
 {
-  "name": "pagination-calculator",
+  "name": "pagination-calculator2",
   "version": "1.0.1",
   "description": "Utility for calculating pages for pagination",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc -p ./tsconfig.json --outDir dist",
-    "build:test": "tsc -p ./tsconfig.test.json",
-    "test": "npm run build:test && alsatian \"./test/**/*.test.js\"",
-    "lint": "tslint -c tslint.json \"./{src,test}/**/*.{ts,tsx}\"",
-    "review": "npm run lint && npm run test"
-  },
   "keywords": [
-    "pagination"
+    "pagination",
+    "create-by-yarn-tool",
+    "create-by-tsdx"
   ],
-  "author": "Henry Ing-Simmons (https://github.com/hisuwh)",
+  "homepage": "https://github.com/bluelovers/pagination-calculator#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/pagination-calculator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/pagination-calculator.git"
+  },
   "license": "MIT",
+  "author": "Henry Ing-Simmons (https://github.com/hisuwh)",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "unpkg": "dist/index.umd.js",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext .ts,.tsx,.mts,.cts ./",
+    "test": "echo test",
+    "test:alsatian": "alsatian \"./src/**/*.test.ts\"",
+    "posttest": "yarn run build",
+    "build": "yarn run build:tsdx && yarn run build:dts",
+    "build:dts": "ynpx dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --no-banner & echo build:dts",
+    "build:tsdx": "ynpx @bluelovers/tsdx build --target node --name index",
+    "npm:publish": "npm publish",
+    "npm:publish:bump": "yarn run version:bump && npm publish",
+    "preversion": "echo preversion && yarn run test",
+    "version": "echo version",
+    "version:bump": "yarn-tool version",
+    "postversion": "echo postversion",
+    "prepublish": "echo prepublish",
+    "prepublishOnly": "yarn run preversion",
+    "prepublishOnly:check-bin": "ynpx --quiet @yarn-tool/check-pkg-bin",
+    "prepublishOnly:update": "yarn run ncu && yarn run sort-package-json",
+    "publish": "echo publish",
+    "postpublish": "yarn run postpublish:changelog && yarn run postpublish:git:commit && yarn run postpublish:git:tag && yarn run postpublish:git:push",
+    "postpublish:changelog": "ynpx --quiet @yarn-tool/changelog && git add ./CHANGELOG.md",
+    "postpublish:git:commit": "git commit -m \"chore(release): publish\" . & echo postpublish:git:commit",
+    "postpublish:git:push": "git push --follow-tags",
+    "postpublish:git:tag": "ynpx --quiet @yarn-tool/tag",
+    "postpublishOnly": "echo postpublishOnly",
+    "ncu": "yarn-tool ncu -u",
+    "review": "npm run lint && npm run test",
+    "sort-package-json": "yarn-tool sort",
+    "tsc:showConfig": "ynpx get-current-tsconfig -p"
+  },
+  "dependencies": {},
   "devDependencies": {
-    "alsatian": "2.1.0",
-    "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
-  }
+    "@bluelovers/tsconfig": "^1.0.28",
+    "alsatian": "3.2.1"
+  },
+  "packageManager": "yarn@^1.22.11"
 }
